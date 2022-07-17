@@ -9,6 +9,7 @@ Agradecimento especial: Lucas Weber
 """
 
 import winsound
+import copy
 
 import keyboard
 import pyautogui
@@ -57,6 +58,10 @@ def distancia_entre_cada():  # distância entre cada verificação de cor
 
 def qual_cor(cordx, cordy):  # verifica a cor do pixel
     valor_atual, g, b = pyautogui.pixel(cordx, cordy)
+    if 190 < valor_atual < 200:
+        return 1
+    if 45 < valor_atual < 55:
+        return 2
     if valor_atual > amarelo:
         return 1
     if valor_atual < azul:
@@ -124,13 +129,14 @@ def arrumar(parametro_lista):  # arruma tudo na lista, linha por linha
     return lista
 
 
-def clicar_em_cada(lista, distancia, cordx_inicio, cordy_inicio):  # clica nos quadrados de acordo com valores da lista
+def clicar_em_cada(lista, distancia, cordx_inicio, cordy_inicio, listaog):  # clica de acordo com valores da lista
     for u in range(len(lista)):
         for t in range(len(lista[i])):
-            if lista[u][t] == 1:
-                pyautogui.click(x=cordx_inicio + (t * distancia), y=cordy_inicio + (u * distancia))
-            else:
-                pyautogui.click(x=cordx_inicio + (t * distancia), y=cordy_inicio + (u * distancia), button="right")
+            if listaog[u][t] == 0:
+                if lista[u][t] == 1:
+                    pyautogui.click(x=cordx_inicio + (t * distancia), y=cordy_inicio + (u * distancia))
+                else:
+                    pyautogui.click(x=cordx_inicio + (t * distancia), y=cordy_inicio + (u * distancia), button="right")
 
 
 def verseterminou(lista):  # verifica se tem 0 na lista
@@ -214,6 +220,7 @@ while 1:  # loop infinito
 
         print("-------------------------------------------------------------------------------------------------------")
 
+        matriz = copy.deepcopy(lista_linhas)
         # imprime a matriz inicial:
         print("\n")
         print("Valores iniciais:")
@@ -238,7 +245,8 @@ while 1:  # loop infinito
 
         winsound.Beep(440, 500)
 
-        clicar_em_cada(lista_linhas, distancia_final, cordx_inicial_verdadeira, cordy_inicial)  # chama função de click
+        # chama função de click:
+        clicar_em_cada(lista_linhas, distancia_final, cordx_inicial_verdadeira, cordy_inicial, matriz)
 
         winsound.Beep(440, 500)
         winsound.Beep(440, 500)
