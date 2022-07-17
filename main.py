@@ -170,6 +170,18 @@ def get_outra_cor(primeira_cor):  # pega a cor contrária
 
 
 while 1:  # loop infinito
+    # conseguir as coordenadas iniciais pela posição do mouse:
+    if keyboard.is_pressed('g'):
+        cordx_inicial, cordy_inicial = pyautogui.position()
+        print("-------------------------------------------------------------------------------------------------------")
+        print("\n")
+        print("Novas coordenadas iniciais:")
+        print("\n")
+        print("x = "+str(cordx_inicial))
+        print("y = "+str(cordy_inicial))
+        print("\n")
+        print("-------------------------------------------------------------------------------------------------------")
+        winsound.Beep(440, 500)
     if keyboard.is_pressed('p'):
         # forma a matriz do tabuleiro:
         pyautogui.moveTo(1, cordy_inicial)
